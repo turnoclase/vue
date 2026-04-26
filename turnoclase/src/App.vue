@@ -1,11 +1,21 @@
 <script setup lang="ts"></script>
 
 <template>
-  <h1>You did it!</h1>
-  <p>
-    Visit <a href="https://vuejs.org/" target="_blank" rel="noopener">vuejs.org</a> to read the
-    documentation
-  </p>
+  <RouterView v-slot="{ Component }">
+    <Transition name="fade" mode="out-in">
+      <component :is="Component" />
+    </Transition>
+  </RouterView>
 </template>
 
-<style scoped></style>
+<style>
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.2s ease;
+}
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
+</style>
+
