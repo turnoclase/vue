@@ -49,16 +49,19 @@ function estiloBoton(pos: { x: number; y: number }) {
   }
 }
 
-// ── Swipe detection ──────────────────────────────────────────────────────────
-let touchStartX = 0
+// ── Swipe / drag detection (touch + mouse) ───────────────────────────────────
+let dragStartX = 0
+let isDragging = false
 
-function onTouchStart(e: TouchEvent) {
-  touchStartX = e.touches[0]?.clientX ?? 0
+function onDragStart(x: number) {
+  dragStartX = x
+  isDragging = true
 }
 
-function onTouchEnd(e: TouchEvent) {
-  const endX = e.changedTouches[0]?.clientX ?? 0
-  const diff = endX - touchStartX
+function onDragEnd(x: number) {
+  if (!isDragging) return
+  isDragging = false
+  const diff = x - dragStartX
   if (Math.abs(diff) > 30) {
     if (diff < 0) {
       store.aulaSiguiente()
@@ -66,6 +69,22 @@ function onTouchEnd(e: TouchEvent) {
       store.aulaAnterior()
     }
   }
+}
+
+function onTouchStart(e: TouchEvent) {
+  onDragStart(e.touches[0]?.clientX ?? 0)
+}
+function onTouchEnd(e: TouchEvent) {
+  onDragEnd(e.changedTouches[0]?.clientX ?? 0)
+}
+function onMouseDown(e: MouseEvent) {
+  onDragStart(e.clientX)
+}
+function onMouseUp(e: MouseEvent) {
+  onDragEnd(e.clientX)
+}
+function onMouseLeave() {
+  isDragging = false
 }
 
 // ── Dialog state ────────────────────────────────────────────────────────────
@@ -166,6 +185,9 @@ onUnmounted(() => {
       }"
       @touchstart.passive="onTouchStart"
       @touchend.passive="onTouchEnd"
+      @mousedown="onMouseDown"
+      @mouseup="onMouseUp"
+      @mouseleave="onMouseLeave"
     >
       <!-- Icono persona de fondo -->
       <div
@@ -391,6 +413,11 @@ onUnmounted(() => {
   justify-content: center;
   overflow: hidden;
   touch-action: pan-y;
+  cursor: grab;
+  user-select: none;
+  &:active {
+    cursor: grabbing;
+  }
 }
 
 .icono-fondo {
