@@ -1,10 +1,11 @@
-name: Desplegar turnoclase en GitHub Pages
+name: Desplegar apps Vue en GitHub Pages
 
 on:
   push:
     branches: [master]
     paths:
       - 'turnoclase/**'
+      - 'turnoclaseprofesor/**'
       - '.github/workflows/deploy-turnoclase.yml'
   workflow_dispatch:
 
@@ -29,13 +30,17 @@ jobs:
         with:
           node-version: 22
           cache: npm
-          cache-dependency-path: turnoclase/package-lock.json
+          cache-dependency-path: |
+            turnoclase/package-lock.json
+            turnoclaseprofesor/package-lock.json
 
-      - name: Instalar dependencias
+      # ── App del alumno ───────────────────────────────────────────────────────
+
+      - name: Instalar dependencias (turnoclase)
         working-directory: turnoclase
         run: npm ci
 
-      - name: Compilar
+      - name: Compilar (turnoclase)
         working-directory: turnoclase
         env:
           BASE_PATH: /vue/
@@ -49,10 +54,38 @@ jobs:
           VITE_RECAPTCHA_SITE_KEY: ${{ secrets.VITE_RECAPTCHA_SITE_KEY }}
         run: npm run build
 
+      # ── App del profesor ─────────────────────────────────────────────────────
+
+      - name: Instalar dependencias (turnoclaseprofesor)
+        working-directory: turnoclaseprofesor
+        run: npm ci
+
+      - name: Compilar (turnoclaseprofesor)
+        working-directory: turnoclaseprofesor
+        env:
+          BASE_PATH: /vue/profesor/
+          VITE_FIREBASE_API_KEY: ${{ secrets.VITE_FIREBASE_API_KEY }}
+          VITE_FIREBASE_AUTH_DOMAIN: ${{ secrets.VITE_FIREBASE_AUTH_DOMAIN }}
+          VITE_FIREBASE_DATABASE_URL: ${{ secrets.VITE_FIREBASE_DATABASE_URL }}
+          VITE_FIREBASE_PROJECT_ID: ${{ secrets.VITE_FIREBASE_PROJECT_ID }}
+          VITE_FIREBASE_STORAGE_BUCKET: ${{ secrets.VITE_FIREBASE_STORAGE_BUCKET }}
+          VITE_FIREBASE_MESSAGING_SENDER_ID: ${{ secrets.VITE_FIREBASE_MESSAGING_SENDER_ID }}
+          VITE_FIREBASE_APP_ID: ${{ secrets.VITE_FIREBASE_APP_ID }}
+          VITE_RECAPTCHA_SITE_KEY: ${{ secrets.VITE_RECAPTCHA_SITE_KEY }}
+        run: npm run build
+
+      # ── Combinar en un único artefacto ───────────────────────────────────────
+
+      - name: Combinar artefactos
+        run: |
+          mkdir -p dist-pages/profesor
+          cp -r turnoclase/dist/. dist-pages/
+          cp -r turnoclaseprofesor/dist/. dist-pages/profesor/
+
       - name: Subir artefacto de Pages
         uses: actions/upload-pages-artifact@v3
         with:
-          path: turnoclase/dist
+          path: dist-pages
 
   deploy:
     needs: build
