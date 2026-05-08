@@ -111,10 +111,11 @@ function seleccionarCodigo(codigo: string) {
       <div class="formulario-centro">
         <div class="campo-grupo mb-3">
           <label class="etiqueta-campo">AULA</label>
-          <div class="d-flex gap-2 align-items-center w-100">
+          <div class="input-con-boton">
             <input
               ref="codigoRef"
               class="input-circular"
+              :class="{ 'input-circular--con-boton': store.historicoAulas.length > 0 }"
               type="text"
               maxlength="5"
               autocomplete="off"
@@ -129,8 +130,7 @@ function seleccionarCodigo(codigo: string) {
             />
             <button
               v-if="store.historicoAulas.length > 0"
-              class="btn btn-sm btn-light rounded-circle p-1"
-              style="width: 36px; height: 36px; flex-shrink: 0;"
+              class="boton-historico"
               @click.stop="mostrarHistorico = true"
             >
               <i class="bi bi-funnel" />
@@ -238,6 +238,33 @@ function seleccionarCodigo(codigo: string) {
 
 .input-circular::placeholder {
   color: #bbb;
+}
+
+.input-circular--con-boton {
+  padding-right: 38px;
+}
+
+.input-con-boton {
+  position: relative;
+  width: 100%;
+}
+
+.boton-historico {
+  position: absolute;
+  right: 6px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 30px;
+  height: 30px;
+  background: transparent;
+  border: none;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgba(0, 0, 0, 0.4);
+  font-size: 18px;
+  cursor: pointer;
 }
 
 .opacity-40 {
