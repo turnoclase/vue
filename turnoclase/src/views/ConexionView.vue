@@ -111,7 +111,7 @@ function seleccionarCodigo(codigo: string) {
       <div class="formulario-centro">
         <div class="campo-grupo mb-3">
           <label class="etiqueta-campo">AULA</label>
-          <div class="d-flex gap-2 align-items-center">
+          <div class="d-flex gap-2 align-items-center w-100">
             <input
               ref="codigoRef"
               class="input-circular"
@@ -122,6 +122,7 @@ function seleccionarCodigo(codigo: string) {
               autocapitalize="characters"
               spellcheck="false"
               inputmode="text"
+              placeholder="BE131"
               :value="store.codigoAula"
               @input="onCodigoCambia"
               @keydown="onCodigoKeydown"
