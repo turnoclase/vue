@@ -242,6 +242,7 @@ function seleccionarCodigo(codigo: string) {
 
 .input-circular--con-boton {
   padding-right: 38px;
+  padding-left: 38px;
 }
 
 .input-con-boton {
