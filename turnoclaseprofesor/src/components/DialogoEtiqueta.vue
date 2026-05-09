@@ -1,5 +1,8 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue'
+import { useI18n } from 'vue-i18n'
+
+const { t } = useI18n()
 
 const props = defineProps<{ valorInicial?: string }>()
 const emit = defineEmits<{
@@ -16,9 +19,9 @@ const puedeGuardar = computed(
 
 <template>
   <div>
-    <h5 class="fw-bold mb-3">Etiquetar aula</h5>
+    <h5 class="fw-bold mb-3">{{ t('etiquetar_aula') }}</h5>
     <div class="mb-4">
-      <label class="form-label fw-semibold">Etiqueta</label>
+      <label class="form-label fw-semibold">{{ t('etiqueta') }}</label>
       <input
         v-model="etiqueta"
         type="text"
@@ -26,11 +29,11 @@ const puedeGuardar = computed(
         maxlength="50"
         placeholder="Ej: 1ºA Matemáticas"
       />
-      <div class="form-text">Introduce la nueva etiqueta.</div>
+      <div class="form-text">{{ t('introduce_nueva_etiqueta') }}</div>
     </div>
     <div class="d-flex gap-2 justify-content-end">
       <button type="button" class="btn btn-outline-secondary" @click="emit('cancelar')">
-        Cancelar
+        {{ t('cancelar') }}
       </button>
       <button
         type="button"
@@ -38,7 +41,7 @@ const puedeGuardar = computed(
         :disabled="!puedeGuardar"
         @click="emit('guardar', etiqueta)"
       >
-        Guardar
+        {{ t('guardar') }}
       </button>
     </div>
   </div>

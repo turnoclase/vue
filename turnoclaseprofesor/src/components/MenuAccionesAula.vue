@@ -1,6 +1,8 @@
 <script setup lang="ts">
+import { useI18n } from 'vue-i18n'
 import { useAulaStore } from '@/stores/aula'
 
+const { t } = useI18n()
 const store = useAulaStore()
 
 const emit = defineEmits<{
@@ -29,8 +31,8 @@ function desconectar() {
       <h5 class="fw-bold mb-1">{{ store.codigoAula }}</h5>
       <span v-if="store.etiquetaAula" class="text-muted fst-italic">» {{ store.etiquetaAula }} «</span>
       <div class="small text-muted mt-1">
-        <span v-if="store.invitado">Conectado como invitado</span>
-        <span v-else>PIN para compartir este aula: <strong>{{ store.PIN }}</strong></span>
+        <span v-if="store.invitado">{{ t('conectado_como_invitado') }}</span>
+        <span v-else>{{ t('pin_compartir', { pin: store.PIN }) }}</span>
       </div>
     </div>
 
@@ -43,7 +45,7 @@ function desconectar() {
           @click="emit('etiquetar')"
         >
           <i class="bi bi-tag" style="color: var(--azul);"></i>
-          Etiquetar aula
+          {{ t('etiquetar_aula') }}
         </button>
 
         <button
@@ -52,7 +54,7 @@ function desconectar() {
           @click="emit('tiempo')"
         >
           <i class="bi bi-stopwatch" style="color: var(--azul);"></i>
-          Tiempo de espera: {{ store.tiempoEspera }} minutos
+          {{ t('tiempo_de_espera_valor', { n: store.tiempoEspera }) }}
         </button>
 
         <button
@@ -62,7 +64,7 @@ function desconectar() {
           @click="anyadirAula"
         >
           <i class="bi bi-plus-circle" style="color: var(--azul);"></i>
-          Añadir aula
+          {{ t('anyadir_aula') }}
         </button>
 
         <button
@@ -72,7 +74,7 @@ function desconectar() {
           @click="emit('borrar')"
         >
           <i class="bi bi-trash" style="color: var(--rojo);"></i>
-          <span style="color: var(--rojo);">Borrar aula</span>
+          <span style="color: var(--rojo);">{{ t('borrar_aula') }}</span>
         </button>
 
         <button
@@ -81,7 +83,7 @@ function desconectar() {
           @click="emit('conectar')"
         >
           <i class="bi bi-link-45deg" style="color: var(--azul);"></i>
-          Conectar a otra aula
+          {{ t('conectar_a_otra_aula') }}
         </button>
       </div>
     </template>
@@ -95,7 +97,7 @@ function desconectar() {
           @click="desconectar"
         >
           <i class="bi bi-x-circle" style="color: var(--rojo);"></i>
-          <span style="color: var(--rojo);">Desconectar del aula</span>
+          <span style="color: var(--rojo);">{{ t('desconectar_del_aula') }}</span>
         </button>
       </div>
     </template>

@@ -1,5 +1,8 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue'
+import { useI18n } from 'vue-i18n'
+
+const { t } = useI18n()
 
 const emit = defineEmits<{
   conectar: [codigo: string, pin: string]
@@ -30,10 +33,10 @@ function conectar() {
 
 <template>
   <div>
-    <h5 class="fw-bold mb-3">Conectar a otra aula</h5>
-    <p class="text-muted small mb-3">Introduce los datos del aula a la que quieres conectar.</p>
+    <h5 class="fw-bold mb-3">{{ t('conectar_a_otra_aula') }}</h5>
+    <p class="text-muted small mb-3">{{ t('introduce_datos_aula') }}</p>
     <div class="mb-3">
-      <label class="form-label fw-semibold">Código de aula</label>
+      <label class="form-label fw-semibold">{{ t('codigo_de_aula') }}</label>
       <input
         type="text"
         class="form-control text-uppercase"
@@ -44,7 +47,7 @@ function conectar() {
       />
     </div>
     <div class="mb-4">
-      <label class="form-label fw-semibold">PIN</label>
+      <label class="form-label fw-semibold">{{ t('pin') }}</label>
       <input
         type="text"
         inputmode="numeric"
@@ -57,7 +60,7 @@ function conectar() {
     </div>
     <div class="d-flex gap-2 justify-content-end">
       <button type="button" class="btn btn-outline-secondary" @click="emit('cancelar')">
-        Cancelar
+        {{ t('cancelar') }}
       </button>
       <button
         type="button"
@@ -65,7 +68,7 @@ function conectar() {
         :disabled="!puedeConectar"
         @click="conectar"
       >
-        Conectar
+        {{ t('conectar') }}
       </button>
     </div>
   </div>

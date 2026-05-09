@@ -1,11 +1,13 @@
 <script setup lang="ts">
 import { ref, computed, onMounted, onUnmounted } from 'vue'
+import { useI18n } from 'vue-i18n'
 import { useConexionStore } from '@/stores/conexion'
 import BotonCircularIcono from '@/components/BotonCircularIcono.vue'
 import IconFlecha from '@/components/icons/IconFlecha.vue'
 import IconPersona from '@/components/icons/IconPersona.vue'
 import HistoricoView from '@/views/HistoricoView.vue'
 
+const { t } = useI18n()
 const store = useConexionStore()
 
 const containerRef = ref<HTMLDivElement | null>(null)
@@ -110,7 +112,7 @@ function seleccionarCodigo(codigo: string) {
       <!-- Formulario centrado -->
       <div class="formulario-centro">
         <div class="campo-grupo mb-3">
-          <label class="etiqueta-campo">Aula</label>
+          <label class="etiqueta-campo">{{ t('aula') }}</label>
           <div class="input-con-boton">
             <input
               ref="codigoRef"
@@ -139,7 +141,7 @@ function seleccionarCodigo(codigo: string) {
         </div>
 
         <div class="campo-grupo">
-          <label class="etiqueta-campo">Nombre</label>
+          <label class="etiqueta-campo">{{ t('nombre') }}</label>
           <input
             ref="nombreRef"
             class="input-circular"

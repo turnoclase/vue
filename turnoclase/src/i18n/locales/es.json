@@ -1,0 +1,22 @@
+{
+  "aula": "Aula",
+  "nombre": "Nombre",
+  "es_tu_turno": "¡Es tu turno!",
+  "volver_a_empezar": "Pulsa ⟳ para pedir turno",
+  "espera": "Espera para pedir turno...",
+  "error_red": "Sin conexión de red.\nPulsa ⟳ para reintentar",
+  "error_aula": "Verifica el número de aula,\nno parece correcto.",
+  "historico_titulo": "Aulas",
+  "historico_vacio": "Todavía no hay aulas",
+  "historico_sin_etiqueta": "Sin etiqueta",
+  "historico_etiquetar": "Etiquetar",
+  "historico_etiqueta_titulo": "Etiquetar aula",
+  "historico_etiqueta_placeholder": "Etiqueta (máx. 20 caracteres)",
+  "historico_etiqueta_mensaje": "Introduce una etiqueta para esta aula.",
+  "cerrar": "Cerrar",
+  "guardar": "Guardar",
+  "cancelar": "Cancelar",
+  "eliminar": "Eliminar",
+  "editar": "Editar",
+  "listo": "Hecho"
+}

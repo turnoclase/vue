@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ref, computed, onMounted, onUnmounted } from 'vue'
+import { useI18n } from 'vue-i18n'
 import { useConexionStore } from '@/stores/conexion'
 import BotonCircular from '@/components/BotonCircular.vue'
 import BotonCircularIcono from '@/components/BotonCircularIcono.vue'
@@ -8,6 +9,7 @@ import IconEquis from '@/components/icons/IconEquis.vue'
 import IconRecargar from '@/components/icons/IconRecargar.vue'
 import IconPersona from '@/components/icons/IconPersona.vue'
 
+const { t } = useI18n()
 const store = useConexionStore()
 
 const containerRef = ref<HTMLDivElement | null>(null)
@@ -97,9 +99,7 @@ onUnmounted(() => {
         <!-- Error -->
         <template v-else-if="store.mostrarError">
           <span class="texto-estado" style="white-space: pre-line;">{{
-            store.errorRed
-              ? 'Sin conexión de red.\nPulsa ⟳ para reintentar'
-              : 'Verifica el número de aula,\nno parece correcto.'
+            store.errorRed ? t('error_red') : t('error_aula')
           }}</span>
         </template>
 
@@ -109,13 +109,13 @@ onUnmounted(() => {
             <span class="numero-posicion">{{ store.estadoTurno.posicion }}</span>
           </template>
           <template v-else-if="store.estadoTurno.tipo === 'esTuTurno'">
-            <span class="texto-turno">¡Es tu turno!</span>
+            <span class="texto-turno">{{ t('es_tu_turno') }}</span>
           </template>
           <template v-else-if="store.estadoTurno.tipo === 'volverAEmpezar'">
-            <span class="texto-turno text-center">Pulsa ⟳ para pedir turno</span>
+            <span class="texto-turno text-center">{{ t('volver_a_empezar') }}</span>
           </template>
           <template v-else-if="store.estadoTurno.tipo === 'esperando'">
-            <span class="texto-turno">Espera para pedir turno...</span>
+            <span class="texto-turno">{{ t('espera') }}</span>
           </template>
         </template>
       </div>

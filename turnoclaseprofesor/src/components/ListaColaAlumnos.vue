@@ -1,11 +1,13 @@
 <script setup lang="ts">
-import { useAulaStore, type AlumnoCola } from '@/stores/aula'
+import { useI18n } from 'vue-i18n'
+import { useAulaStore } from '@/stores/aula'
 
+const { t } = useI18n()
 const store = useAulaStore()
 const emit = defineEmits<{ cerrar: [] }>()
 
 async function vaciar() {
-  if (window.confirm('Esta acción eliminará a todos los alumnos de la cola de espera.')) {
+  if (window.confirm(t('accion_eliminara_alumnos'))) {
     await store.vaciarCola()
   }
 }
@@ -18,14 +20,14 @@ async function vaciar() {
       <h5 class="fw-bold mb-1">{{ store.codigoAula }}</h5>
       <span v-if="store.etiquetaAula" class="text-muted fst-italic small">» {{ store.etiquetaAula }} «</span>
       <div class="text-muted small mt-1">
-        {{ store.enCola }} alumno{{ store.enCola === 1 ? '' : 's' }} en cola
+        {{ t('alumnos_en_cola', { n: store.enCola }, store.enCola) }}
       </div>
     </div>
 
     <!-- Cola vacía -->
     <div v-if="store.alumnosEnCola.length === 0" class="d-flex flex-column align-items-center justify-content-center flex-grow-1 gap-3 text-muted">
       <i class="bi bi-person-slash" style="font-size: 3rem;"></i>
-      <span>La cola está vacía</span>
+      <span>{{ t('la_cola_esta_vacia') }}</span>
     </div>
 
     <!-- Lista de alumnos -->
@@ -67,7 +69,7 @@ async function vaciar() {
     <!-- Vaciar cola -->
     <div v-if="store.alumnosEnCola.length > 0" class="mt-3">
       <button type="button" class="btn btn-danger w-100" @click="vaciar">
-        Vaciar cola
+        {{ t('vaciar_cola') }}
       </button>
     </div>
   </div>

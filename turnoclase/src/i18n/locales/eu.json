@@ -1,0 +1,22 @@
+{
+  "aula": "Ikasgela",
+  "nombre": "Izena",
+  "es_tu_turno": "Zure txanda da!",
+  "volver_a_empezar": "Sakatu ⟳ txanda eskatzeko",
+  "espera": "Itxaron txanda eskatzeko...",
+  "error_red": "Sare konexiorik ez.\nSakatu ⟳ berriro saiatzeko",
+  "error_aula": "Gela zenbakia egiaztatu,\nez dirudi zuzena.",
+  "historico_titulo": "Gelak",
+  "historico_vacio": "Oraindik ez dago gelarik",
+  "historico_sin_etiqueta": "Etiketa gabe",
+  "historico_etiquetar": "Etiketatu",
+  "historico_etiqueta_titulo": "Gela etiketatu",
+  "historico_etiqueta_placeholder": "Etiketa (gehienez 20 karaktere)",
+  "historico_etiqueta_mensaje": "Sartu etiketa bat gela honentzako.",
+  "cerrar": "Itxi",
+  "guardar": "Gorde",
+  "cancelar": "Utzi",
+  "eliminar": "Ezabatu",
+  "editar": "Editatu",
+  "listo": "Eginda"
+}

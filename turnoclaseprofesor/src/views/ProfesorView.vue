@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ref, computed, onMounted, onUnmounted } from 'vue'
+import { useI18n } from 'vue-i18n'
 import { useAulaStore } from '@/stores/aula'
 import BotonCircular from '@/components/BotonCircular.vue'
 import BotonCircularIcono from '@/components/BotonCircularIcono.vue'
@@ -13,6 +14,7 @@ import IconFlecha from '@/components/icons/IconFlecha.vue'
 import IconRecargar from '@/components/icons/IconRecargar.vue'
 import IconPersona from '@/components/icons/IconPersona.vue'
 
+const { t } = useI18n()
 const store = useAulaStore()
 
 // ── Tamaño viewport ─────────────────────────────────────────────────────────
@@ -206,7 +208,7 @@ onUnmounted(() => {
           class="text-center"
           style="font-size: 22px; color: #000; padding: 20px;"
         >
-          No hay conexión de red
+          {{ t('no_hay_conexion_red') }}
         </span>
 
         <span
@@ -228,7 +230,7 @@ onUnmounted(() => {
       }"
     >
       <div v-if="store.mostrarIndicador" class="spinner-border spinner-border-sm" role="status">
-        <span class="visually-hidden">Creando aula…</span>
+        <span class="visually-hidden">{{ t('creando_aula') }}</span>
       </div>
       <div
         v-else-if="store.numAulas > 1 && !store.invitado"
@@ -383,11 +385,11 @@ onUnmounted(() => {
       class="modal-panel"
     >
       <div class="modal-panel__content">
-        <h5 class="fw-bold mb-2">Borrar aula</h5>
-        <p class="text-muted">¿Seguro que quieres borrar el aula <strong>{{ store.codigoAula }}</strong>? Esta acción no se puede deshacer.</p>
+        <h5 class="fw-bold mb-2">{{ t('borrar_aula') }}</h5>
+        <p class="text-muted">{{ t('borrar_aula_confirmacion', { code: store.codigoAula }) }}</p>
         <div class="d-flex gap-2 justify-content-end">
-          <button type="button" class="btn btn-outline-secondary" @click="mostrarDialogoBorrar = false">Cancelar</button>
-          <button type="button" class="btn btn-danger" @click="confirmarBorrar">Borrar</button>
+          <button type="button" class="btn btn-outline-secondary" @click="mostrarDialogoBorrar = false">{{ t('cancelar') }}</button>
+          <button type="button" class="btn btn-danger" @click="confirmarBorrar">{{ t('eliminar') }}</button>
         </div>
       </div>
     </div>

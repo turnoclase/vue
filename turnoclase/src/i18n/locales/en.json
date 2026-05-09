@@ -1,0 +1,22 @@
+{
+  "aula": "Classroom",
+  "nombre": "Name",
+  "es_tu_turno": "It's your turn!",
+  "volver_a_empezar": "Press ⟳ to request a turn",
+  "espera": "Wait to request another turn...",
+  "error_red": "No network connection.\nPress ⟳ to retry",
+  "error_aula": "Check classroom number,\nit doesn't seem to be correct.",
+  "historico_titulo": "Classrooms",
+  "historico_vacio": "No classrooms yet",
+  "historico_sin_etiqueta": "No label",
+  "historico_etiquetar": "Label",
+  "historico_etiqueta_titulo": "Label classroom",
+  "historico_etiqueta_placeholder": "Label (max. 20 characters)",
+  "historico_etiqueta_mensaje": "Enter a label for this classroom.",
+  "cerrar": "Close",
+  "guardar": "Save",
+  "cancelar": "Cancel",
+  "eliminar": "Delete",
+  "editar": "Edit",
+  "listo": "Done"
+}

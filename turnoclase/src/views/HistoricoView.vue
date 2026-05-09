@@ -1,6 +1,9 @@
 <script setup lang="ts">
 import { ref } from 'vue'
+import { useI18n } from 'vue-i18n'
 import { useConexionStore } from '@/stores/conexion'
+
+const { t } = useI18n()
 
 const emit = defineEmits<{
   cerrar: []
@@ -35,14 +38,14 @@ function cancelarEdicion() {
   <div class="historico-overlay" @click.self="emit('cerrar')">
     <div class="historico-panel">
       <div class="historico-header d-flex justify-content-between align-items-center mb-3">
-        <h5 class="mb-0 fw-semibold">Aulas</h5>
+        <h5 class="mb-0 fw-semibold">{{ t('historico_titulo') }}</h5>
         <button class="btn-close" @click="emit('cerrar')" />
       </div>
 
       <!-- Lista vacía -->
       <div v-if="store.historicoAulas.length === 0" class="historico-vacio text-center text-muted py-4">
         <i class="bi bi-clock-history fs-1 d-block mb-2" />
-        <span>Todavía no hay aulas</span>
+        <span>{{ t('historico_vacio') }}</span>
       </div>
 
       <!-- Lista -->
@@ -68,7 +71,8 @@ function cancelarEdicion() {
                 class="form-control form-control-sm"
                 type="text"
                 v-model="textoEdicion"
-                maxlength="30"
+                maxlength="20"
+                :placeholder="t('historico_etiqueta_placeholder')"
                 @blur="guardarEdicion(aula.id)"
                 @keydown.enter="guardarEdicion(aula.id)"
                 @keydown.escape="cancelarEdicion"
@@ -77,7 +81,7 @@ function cancelarEdicion() {
             </template>
             <template v-else>
               <span v-if="aula.etiqueta" class="historico-etiqueta">{{ aula.etiqueta }}</span>
-              <span v-else class="historico-sin-etiqueta fst-italic text-muted">Sin etiqueta</span>
+              <span v-else class="historico-sin-etiqueta fst-italic text-muted">{{ t('historico_sin_etiqueta') }}</span>
             </template>
           </div>
 
