@@ -219,11 +219,12 @@ function seleccionarCodigo(codigo: string) {
 }
 
 .etiqueta-campo {
-  font-size: 13px;
-  font-weight: 600;
+  font-size: 16px;
+  font-weight: 400;
   letter-spacing: 0.08em;
-  color: #555;
+  color: #333;
   margin-bottom: 4px;
+  text-transform: uppercase;
 }
 
 .input-circular {
