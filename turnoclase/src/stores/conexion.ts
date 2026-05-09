@@ -52,6 +52,7 @@ function withTimeout<T>(seconds: number, fn: () => Promise<T>): Promise<T> {
 const LS_HISTORICO = 'historicoAulas'
 const LS_CODIGO = 'codigoAula'
 const LS_NOMBRE = 'nombreUsuario'
+const LS_AULA_ACTUAL = 'codigoAulaActual'
 
 function cargarHistorico(): AulaHistorico[] {
   try {
@@ -460,6 +461,7 @@ export const useConexionStore = defineStore('conexion', () => {
       }
       refPosicion = null
     }
+    localStorage.removeItem(LS_AULA_ACTUAL)
     router.push('/')
   }
 
@@ -474,6 +476,7 @@ export const useConexionStore = defineStore('conexion', () => {
 
     localStorage.setItem(LS_CODIGO, codigo)
     localStorage.setItem(LS_NOMBRE, nombre)
+    localStorage.setItem(LS_AULA_ACTUAL, codigo)
     codigoAulaActual.value = codigo
 
     pedirTurno = true
@@ -536,6 +539,42 @@ export const useConexionStore = defineStore('conexion', () => {
     })
   }
 
+  // ── reconectar ─────────────────────────────────────────────────────────────
+  // Llamado desde TurnoView al montar si la página fue recargada sin navegar
+  // a través de conectar(). Restaura la sesión usando los datos de localStorage.
+  async function reconectar() {
+    const codigoGuardado = localStorage.getItem(LS_AULA_ACTUAL)
+    if (!codigoGuardado) {
+      // No había sesión activa — volver a la pantalla de conexión.
+      cargando.value = false
+      router.push('/')
+      return
+    }
+
+    codigoAulaActual.value = codigoGuardado
+    pedirTurno = true
+    atendido = false
+    encolando = false
+    ultimaPeticion = null
+    iniciarCarga()
+    mostrarError.value = false
+    errorRed.value = false
+    estadoTurno.value = { tipo: 'enCola', posicion: 0 }
+    reiniciarCronometro()
+
+    try {
+      const resultado: UserCredential = await withTimeout(10, () =>
+        signInAnonymously(auth),
+      )
+      uid = resultado.user.uid
+      encolarAlumno(codigoGuardado)
+    } catch {
+      errorRed.value = true
+      estadoTurno.value = { tipo: 'error', mensaje: 'Error de conexión' }
+      actualizarUI()
+    }
+  }
+
   function actualizarEtiqueta(id: string, etiqueta: string) {
     historicoAulas.value = historicoAulas.value.map((h) =>
       h.id === id ? { ...h, etiqueta } : h,
@@ -570,6 +609,7 @@ export const useConexionStore = defineStore('conexion', () => {
     cancelar,
     actualizar,
     reintentar,
+    reconectar,
     actualizarEtiqueta,
     eliminarDelHistorico,
   }

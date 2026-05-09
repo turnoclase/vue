@@ -54,6 +54,11 @@ const tiempoFormateado = computed(() => {
 let ro: ResizeObserver | null = null
 
 onMounted(() => {
+  // Si codigoAulaActual está vacío es una recarga de página: restaurar sesión.
+  if (!store.codigoAulaActual) {
+    store.reconectar()
+  }
+
   ro = new ResizeObserver((entries) => {
     const entry = entries[0]
     if (!entry) return
