@@ -110,7 +110,7 @@ function seleccionarCodigo(codigo: string) {
       <!-- Formulario centrado -->
       <div class="formulario-centro">
         <div class="campo-grupo mb-3">
-          <label class="etiqueta-campo">AULA</label>
+          <label class="etiqueta-campo">Aula</label>
           <div class="input-con-boton">
             <input
               ref="codigoRef"
@@ -139,7 +139,7 @@ function seleccionarCodigo(codigo: string) {
         </div>
 
         <div class="campo-grupo">
-          <label class="etiqueta-campo">NOMBRE</label>
+          <label class="etiqueta-campo">Nombre</label>
           <input
             ref="nombreRef"
             class="input-circular"

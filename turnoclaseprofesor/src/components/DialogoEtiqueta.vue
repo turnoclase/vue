@@ -18,7 +18,7 @@ const puedeGuardar = computed(
   <div>
     <h5 class="fw-bold mb-3">Etiquetar aula</h5>
     <div class="mb-4">
-      <label class="form-label fw-semibold">Etiqueta <span class="text-muted fw-normal">(opcional)</span></label>
+      <label class="form-label fw-semibold">Etiqueta</label>
       <input
         v-model="etiqueta"
         type="text"
@@ -26,7 +26,7 @@ const puedeGuardar = computed(
         maxlength="50"
         placeholder="Ej: 1ºA Matemáticas"
       />
-      <div class="form-text">Deja en blanco para quitar la etiqueta. Mínimo 3 caracteres si escribes algo.</div>
+      <div class="form-text">Introduce la nueva etiqueta.</div>
     </div>
     <div class="d-flex gap-2 justify-content-end">
       <button type="button" class="btn btn-outline-secondary" @click="emit('cancelar')">

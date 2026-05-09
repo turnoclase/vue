@@ -52,7 +52,7 @@ function desconectar() {
           @click="emit('tiempo')"
         >
           <i class="bi bi-stopwatch" style="color: var(--azul);"></i>
-          Tiempo de espera: {{ store.tiempoEspera }} minuto{{ store.tiempoEspera === 1 ? '' : 's' }}
+          Tiempo de espera: {{ store.tiempoEspera }} minutos
         </button>
 
         <button

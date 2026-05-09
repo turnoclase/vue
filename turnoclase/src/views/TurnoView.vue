@@ -96,9 +96,11 @@ onUnmounted(() => {
 
         <!-- Error -->
         <template v-else-if="store.mostrarError">
-          <span class="texto-estado">
-            {{ store.errorRed ? 'Error de conexión' : 'Aula no encontrada' }}
-          </span>
+          <span class="texto-estado" style="white-space: pre-line;">{{
+            store.errorRed
+              ? 'Sin conexión de red.\nPulsa ⟳ para reintentar'
+              : 'Verifica el número de aula,\nno parece correcto.'
+          }}</span>
         </template>
 
         <!-- Estado normal -->
@@ -110,10 +112,10 @@ onUnmounted(() => {
             <span class="texto-turno">¡Es tu turno!</span>
           </template>
           <template v-else-if="store.estadoTurno.tipo === 'volverAEmpezar'">
-            <span class="texto-turno text-center" style="white-space: pre-line;">Puedes pedir{'\n'}turno de nuevo</span>
+            <span class="texto-turno text-center">Pulsa ⟳ para pedir turno</span>
           </template>
           <template v-else-if="store.estadoTurno.tipo === 'esperando'">
-            <span class="texto-turno">Espera</span>
+            <span class="texto-turno">Espera para pedir turno...</span>
           </template>
         </template>
       </div>

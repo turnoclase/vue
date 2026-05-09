@@ -13,10 +13,10 @@ const seleccionado = ref(props.valorInicial ?? 5)
 
 <template>
   <div>
-    <h5 class="fw-bold mb-3">Tiempo de espera</h5>
+    <h5 class="fw-bold mb-3">Establecer tiempo de espera</h5>
     <p class="text-muted small">Tiempo mínimo que un alumno debe esperar antes de volver a pedir turno.</p>
     <div class="mb-4">
-      <label class="form-label fw-semibold">Minutos</label>
+      <label class="form-label fw-semibold">Tiempo de espera (minutos)</label>
       <select v-model="seleccionado" class="form-select">
         <option v-for="t in tiempos" :key="t" :value="t">
           {{ t === 0 ? 'Sin espera' : `${t} minuto${t === 1 ? '' : 's'}` }}

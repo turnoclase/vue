@@ -5,7 +5,7 @@ const store = useAulaStore()
 const emit = defineEmits<{ cerrar: [] }>()
 
 async function vaciar() {
-  if (window.confirm('¿Seguro que quieres vaciar la cola?')) {
+  if (window.confirm('Esta acción eliminará a todos los alumnos de la cola de espera.')) {
     await store.vaciarCola()
   }
 }

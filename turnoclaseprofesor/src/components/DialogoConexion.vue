@@ -31,8 +31,9 @@ function conectar() {
 <template>
   <div>
     <h5 class="fw-bold mb-3">Conectar a otra aula</h5>
+    <p class="text-muted small mb-3">Introduce los datos del aula a la que quieres conectar.</p>
     <div class="mb-3">
-      <label class="form-label fw-semibold">Código del aula</label>
+      <label class="form-label fw-semibold">Código de aula</label>
       <input
         type="text"
         class="form-control text-uppercase"

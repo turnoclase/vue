@@ -35,14 +35,14 @@ function cancelarEdicion() {
   <div class="historico-overlay" @click.self="emit('cerrar')">
     <div class="historico-panel">
       <div class="historico-header d-flex justify-content-between align-items-center mb-3">
-        <h5 class="mb-0 fw-semibold">Aulas recientes</h5>
+        <h5 class="mb-0 fw-semibold">Aulas</h5>
         <button class="btn-close" @click="emit('cerrar')" />
       </div>
 
       <!-- Lista vacía -->
       <div v-if="store.historicoAulas.length === 0" class="historico-vacio text-center text-muted py-4">
         <i class="bi bi-clock-history fs-1 d-block mb-2" />
-        <span>No hay aulas recientes</span>
+        <span>Todavía no hay aulas</span>
       </div>
 
       <!-- Lista -->
