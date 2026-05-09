@@ -512,12 +512,11 @@ export const useConexionStore = defineStore('conexion', () => {
   }
 
   function actualizar() {
-    if (atendido) {
-      atendido = false
-      pedirTurno = true
-      iniciarCarga()
-      buscarAlumnoEnCola()
-    }
+    if (estadoTurno.value.tipo !== 'volverAEmpezar') return
+    atendido = false
+    pedirTurno = true
+    iniciarCarga()
+    buscarAlumnoEnCola()
   }
 
   function reintentar() {
