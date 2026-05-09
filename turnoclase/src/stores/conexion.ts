@@ -515,7 +515,8 @@ export const useConexionStore = defineStore('conexion', () => {
     if (atendido) {
       atendido = false
       pedirTurno = true
-      encolarAlumno(codigoAulaActual.value)
+      iniciarCarga()
+      buscarAlumnoEnCola()
     }
   }
 
