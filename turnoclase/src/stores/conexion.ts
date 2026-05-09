@@ -524,12 +524,8 @@ export const useConexionStore = defineStore('conexion', () => {
     const codigo = codigoAulaActual.value
     const nombre = nombreEfectivo.value
 
-    if (uid !== null) {
-      pedirTurno = true
-      encolarAlumno(codigo)
-      return
-    }
-
+    // Siempre pasa por signInAnonymously para garantizar un ID token fresco,
+    // independientemente de si uid ya existía (mismo patrón que en móvil).
     signInAnonymously(auth).then((resultado) => {
       uid = resultado.user.uid
       actualizarAlumno(nombre)

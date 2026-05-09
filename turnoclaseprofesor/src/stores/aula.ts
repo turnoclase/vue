@@ -404,24 +404,23 @@ export const useAulaStore = defineStore('aula', () => {
     iniciarCarga()
 
     try {
-      if (uid !== null) {
-        const codigoGuardado = localStorage.getItem(LS_CODIGO_INVITADO)
-        const pinGuardado = localStorage.getItem(LS_PIN_INVITADO)
-        if (codigoGuardado && pinGuardado) {
-          await buscarAula(codigoGuardado, pinGuardado)
-        } else {
-          await conectarAula(aulaActual.value)
-        }
+      // Siempre pasa por signInAnonymously para garantizar un ID token fresco,
+      // independientemente de si uid ya existía (mismo patrón que en móvil).
+      const resultado = await signInAnonymously(auth)
+      const nuevoUid = resultado.user.uid
+      const storedUid = localStorage.getItem(LS_UID)
+      if (storedUid && storedUid !== nuevoUid) {
+        uid = storedUid
       } else {
-        const resultado = await signInAnonymously(auth)
-        const nuevoUid = resultado.user.uid
-        const storedUid = localStorage.getItem(LS_UID)
-        if (storedUid && storedUid !== nuevoUid) {
-          uid = storedUid
-        } else {
-          uid = nuevoUid
-          localStorage.setItem(LS_UID, nuevoUid)
-        }
+        uid = nuevoUid
+        localStorage.setItem(LS_UID, nuevoUid)
+      }
+
+      const codigoGuardado = localStorage.getItem(LS_CODIGO_INVITADO)
+      const pinGuardado = localStorage.getItem(LS_PIN_INVITADO)
+      if (codigoGuardado && pinGuardado) {
+        await buscarAula(codigoGuardado, pinGuardado)
+      } else {
         await conectarAula(aulaActual.value)
       }
     } catch {
