@@ -496,7 +496,7 @@ export const useConexionStore = defineStore('conexion', () => {
         signInAnonymously(auth),
       )
       uid = resultado.user.uid
-      actualizarAlumno(nombre)
+      await actualizarAlumno(nombre)
       encolarAlumno(codigo)
     } catch {
       errorRed.value = true
@@ -529,9 +529,9 @@ export const useConexionStore = defineStore('conexion', () => {
 
     // Siempre pasa por signInAnonymously para garantizar un ID token fresco,
     // independientemente de si uid ya existía (mismo patrón que en móvil).
-    signInAnonymously(auth).then((resultado) => {
+    signInAnonymously(auth).then(async (resultado) => {
       uid = resultado.user.uid
-      actualizarAlumno(nombre)
+      await actualizarAlumno(nombre)
       pedirTurno = true
       encolarAlumno(codigo)
     }).catch(() => {
