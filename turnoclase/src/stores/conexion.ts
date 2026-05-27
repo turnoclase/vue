@@ -356,7 +356,7 @@ export const useConexionStore = defineStore('conexion', () => {
         }
       })
     } else {
-      manejarAtendido()
+      if (!encolando) manejarAtendido()
     }
   }
 

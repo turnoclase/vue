@@ -59,6 +59,9 @@ export const useAulaStore = defineStore('aula', () => {
   let unsubCola: Unsubscribe | null = null
   let avanzandoCola = false
   let vaciandoCola = false
+  // Tokens para cancelar operaciones async obsoletas (RC1, RC4)
+  let listaToken = 0
+  let siguienteToken = 0
   let inicioCarga: Date = new Date(0)
 
   // ── Carga helpers ──────────────────────────────────────────────────────────
@@ -84,6 +87,7 @@ export const useAulaStore = defineStore('aula', () => {
 
   // ── mostrarSiguienteDesdeSnapshot ──────────────────────────────────────────
   async function mostrarSiguienteDesdeSnapshot(docs: { data: () => Record<string, unknown> }[]) {
+    const token = ++siguienteToken
     if (docs.length === 0) {
       nombreAlumno.value = ''
       return
@@ -94,6 +98,7 @@ export const useAulaStore = defineStore('aula', () => {
     if (!alumnoId) return
     try {
       const alumnoDoc = await getDoc(doc(db, 'alumnos', alumnoId))
+      if (token !== siguienteToken) return
       if (alumnoDoc.exists()) {
         nombreAlumno.value = (alumnoDoc.data()['nombre'] as string | undefined) ?? ''
       }
@@ -104,8 +109,10 @@ export const useAulaStore = defineStore('aula', () => {
 
   // ── actualizarListaAlumnosEnCola ───────────────────────────────────────────
   async function actualizarListaAlumnosEnCola(docs: { id: string; data: () => Record<string, unknown> }[]) {
+    const token = ++listaToken
     const lista: AlumnoCola[] = []
     for (const d of docs) {
+      if (token !== listaToken) return
       const alumnoId = d.data()['alumno'] as string | undefined
       if (!alumnoId) continue
       let nombre = alumnoId
@@ -119,6 +126,7 @@ export const useAulaStore = defineStore('aula', () => {
       }
       lista.push({ id: d.id, alumnoId, nombre })
     }
+    if (token !== listaToken) return
     alumnosEnCola.value = lista
   }
 
@@ -318,7 +326,6 @@ export const useAulaStore = defineStore('aula', () => {
           await setDoc(doc(refAula, 'espera', alumnoId), { timestamp: serverTimestamp() })
         }
         await deleteDoc(primer.ref)
-        avanzandoCola = false
 
         if (docs.length > 1) {
           const segundo = docs[1]
@@ -337,6 +344,7 @@ export const useAulaStore = defineStore('aula', () => {
         } else {
           nombreAlumno.value = ''
         }
+        avanzandoCola = false
       } else {
         const primer = docs[0]
         if (!primer) return
@@ -504,7 +512,9 @@ export const useAulaStore = defineStore('aula', () => {
     if (!refAula) return
     nombreAlumno.value = ''
     alumnosEnCola.value = []
-    avanzandoCola = false
+    // Invalidar tokens para que las operaciones en vuelo no sobreescriban el estado vaciado
+    listaToken++
+    siguienteToken++
     vaciandoCola = true
     try {
       const snap = await getDocs(collection(refAula, 'cola'))
