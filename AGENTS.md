@@ -12,13 +12,17 @@ aplicaciones Vue 3 independientes desplegadas en GitHub Pages:
 
 ## Stack tecnológico
 
-- **Lenguaje:** TypeScript
+- **Lenguaje:** TypeScript 7 (compilador nativo Go)
 - **Framework:** Vue 3 (`<script setup>` + Composition API)
 - **Estado:** Pinia
 - **Enrutamiento:** Vue Router 5 — **modo hash** (`createWebHashHistory`), requerido para GitHub Pages
 - **Build:** Vite 6
 - **CSS:** Bootstrap 5 + Bootstrap Icons (instalados como paquetes npm, importados vía SCSS)
-- **Comprobación de tipos:** vue-tsc
+- **Comprobación de tipos:** vue-tsc. Como TypeScript 7 no incluye la implementación JS que
+  requiere vue-tsc (su motor, `@volar/typescript`, solo soporta `typescript < 7`), se añade la
+  dependencia de desarrollo `@typescript/typescript6` (la última implementación JS) y el wrapper
+  `scripts/vue-tsc.cjs` de cada app le pasa explícitamente ese `tsc`. El binario `tsc` del
+  proyecto sigue siendo el de TypeScript 7; solo el type-check de `.vue` usa la implementación JS.
 - **Backend:** Firebase (Auth anónima, Firestore, App Check con reCAPTCHA v3, Cloud Functions)
 - **Runtime:** Node.js ^20.19.0 || >=22.12.0
 
@@ -85,7 +89,7 @@ npm install          # Instalar dependencias
 npm run dev          # Servidor de desarrollo (http://localhost:5173)
 npm run build        # Compilar para producción (type-check + build)
 npm run build-only   # Compilar sin type-check
-npm run type-check   # Verificar tipos con vue-tsc
+npm run type-check   # Verificar tipos con vue-tsc (vía scripts/vue-tsc.cjs)
 npm run preview      # Previsualizar el build de producción
 ```
 
